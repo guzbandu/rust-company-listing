@@ -1,22 +1,17 @@
-use std::io;
 use std::collections::HashMap;
+use std::io;
 
 #[derive(Debug)]
 struct Company {
-    _dept_list: HashMap::<String, Vec<String>>
+    _dept_list: HashMap<String, Vec<String>>,
 }
 
 impl Company {
     pub fn new(&mut self) -> &mut Company {
         self
     }
-    pub fn insert_employee<'a>(comp:&'a mut Company, 
-        dept_name: String, 
-        emp_name: String) {
-        let emp_vect = comp
-            ._dept_list
-            .entry(dept_name)
-            .or_insert(Vec::new());
+    pub fn insert_employee<'a>(comp: &'a mut Company, dept_name: String, emp_name: String) {
+        let emp_vect = comp._dept_list.entry(dept_name).or_insert(Vec::new());
         emp_vect.push(emp_name.to_string());
     }
 }
@@ -24,7 +19,9 @@ impl Company {
 fn main() {
     let mut employee_name = String::new();
     let mut dept_name = String::new();
-    let mut company = Company{_dept_list:HashMap::new()};
+    let mut company = Company {
+        _dept_list: HashMap::new(),
+    };
     let company = Company::new(&mut company);
     while employee_name != "q".to_string() {
         println!("Enter an employee name or q to quit");
@@ -39,9 +36,7 @@ fn main() {
                 .read_line(&mut dept_name)
                 .expect("Failed to read line");
             dept_name = dept_name.trim().to_string();
-            Company::insert_employee(company, 
-                dept_name.to_string(), 
-                employee_name.to_string());
+            Company::insert_employee(company, dept_name.to_string(), employee_name.to_string());
             dept_name = "".to_string();
         }
     }
